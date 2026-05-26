@@ -31,4 +31,9 @@ public class OrderServiceImpl implements OrderService {
         // 4.返回
         return order;
     }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderMapper.update(order);
+    }
 }
