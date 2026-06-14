@@ -3,3 +3,5 @@
 ### IntelliJ IDEA ###
 .idea
 .iml
+
+.idea/*.xml
