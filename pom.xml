@@ -12,6 +12,7 @@
         <module>order-service</module>
         <module>eureka-service</module>
         <module>gateway-service</module>
+        <module>db-management</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -29,7 +30,7 @@
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
         <spring-data-jpa.version>3.2.6</spring-data-jpa.version>
-        <mysql.version>5.1.47</mysql.version>
+        <mysql.version>8.0.33</mysql.version>
         <mybatis.version>3.0.3</mybatis.version>
         <mybatis.apring.version>3.0.3</mybatis.apring.version>
     </properties>
@@ -58,8 +59,8 @@
             </dependency>
             <!-- mysql driver -->
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
             <!-- mybatis -->
