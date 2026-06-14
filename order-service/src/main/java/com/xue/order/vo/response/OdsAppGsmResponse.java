@@ -1,0 +1,25 @@
+package com.xue.order.vo.response;
+
+import com.xue.order.pojo.OdsAppGsmTgValuAssetLiabDQ;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class OdsAppGsmResponse {
+
+    /** 当前页数据列表 */
+    private List<OdsAppGsmTgValuAssetLiabDQ> records;
+
+    /** 总记录数 */
+    private Long total;
+
+    /** 当前页码 */
+    private Long pageNum;
+
+    /** 每页条数 */
+    private Long pageSize;
+
+    /** 总页数 */
+    private Long pages;
+}
