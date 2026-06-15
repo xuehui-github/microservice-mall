@@ -10,8 +10,11 @@ public class OdsIasEvalRequest {
     /** 账户名称（模糊查询） */
     private String secuAccname;
 
-    /** 估值日期（精确匹配） */
-    private LocalDate begDate;
+    /** 估值日期-起始（范围查询，含当日） */
+    private LocalDate startDate;
+
+    /** 估值日期-结束（范围查询，含当日） */
+    private LocalDate endDate;
 
     /** 当前页码，默认 1 */
     private Long pageNum = 1L;

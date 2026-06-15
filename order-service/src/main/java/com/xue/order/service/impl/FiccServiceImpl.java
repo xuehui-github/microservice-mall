@@ -2,13 +2,16 @@ package com.xue.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xue.order.mapper.DwdEvalOneMapper;
 import com.xue.order.mapper.OdsAppGsmTgMapper;
 import com.xue.order.mapper.OdsOneMapper;
+import com.xue.order.pojo.DwdEvalOne;
 import com.xue.order.pojo.OdsAppGsmTgValuAssetLiabDQ;
 import com.xue.order.pojo.OdsIasEvalOne;
 import com.xue.order.service.FiccService;
 import com.xue.order.vo.requests.OdsAppGsmRequest;
 import com.xue.order.vo.requests.OdsIasEvalRequest;
+import com.xue.order.vo.response.DwdEvalOneResponse;
 import com.xue.order.vo.response.OdsAppGsmResponse;
 import com.xue.order.vo.response.OdsIasEvalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,67 +29,83 @@ public class FiccServiceImpl implements FiccService {
     @Autowired
     private OdsAppGsmTgMapper odsAppGsmTgMapper;
 
+    @Autowired
+    private DwdEvalOneMapper dwdEvalOneMapper;
+
     @Override
     public OdsIasEvalResponse queryOdsIasEvalList(OdsIasEvalRequest request) {
-        // 构建分页对象
         Page<OdsIasEvalOne> page = new Page<>(request.getPageNum(), request.getPageSize());
 
-        // 构建查询条件
         LambdaQueryWrapper<OdsIasEvalOne> wrapper = new LambdaQueryWrapper<>();
-
-        // secu_accname 模糊查询
         if (StringUtils.hasText(request.getSecuAccname())) {
             wrapper.like(OdsIasEvalOne::getSecuAccname, request.getSecuAccname());
         }
-
-        // beg_date 精确匹配
-        if (request.getBegDate() != null) {
-            wrapper.eq(OdsIasEvalOne::getBegDate, request.getBegDate());
+        if (request.getStartDate() != null) {
+            wrapper.ge(OdsIasEvalOne::getBegDate, request.getStartDate());
         }
-
-        // 按 beg_date 降序排序
+        if (request.getEndDate() != null) {
+            wrapper.le(OdsIasEvalOne::getBegDate, request.getEndDate());
+        }
         wrapper.orderByDesc(OdsIasEvalOne::getBegDate);
 
-        // 执行分页查询
         Page<OdsIasEvalOne> resultPage = odsOneMapper.selectPage(page, wrapper);
 
-        // 构建响应
         OdsIasEvalResponse response = new OdsIasEvalResponse();
         response.setRecords(resultPage.getRecords());
         response.setTotal(resultPage.getTotal());
         response.setPageNum(resultPage.getCurrent());
         response.setPageSize(resultPage.getSize());
         response.setPages(resultPage.getPages());
-
         return response;
     }
 
     @Override
     public OdsAppGsmResponse queryOdsIasEvalOfInList(OdsAppGsmRequest request) {
-        // 使用传统 MyBatis 查询总记录数
-        Long total = odsAppGsmTgMapper.count(request.getAcctName(), request.getEtlTxDate());
-
-        // 计算偏移量
+        Long total = odsAppGsmTgMapper.count(
+                request.getAcctName(),
+                request.getStartDate(), request.getEndDate());
         long offset = (request.getPageNum() - 1) * request.getPageSize();
 
-        // 使用传统 MyBatis 分页查询数据
         List<OdsAppGsmTgValuAssetLiabDQ> records = odsAppGsmTgMapper.queryList(
                 request.getAcctName(),
-                request.getEtlTxDate(),
-                offset,
-                request.getPageSize());
+                request.getStartDate(), request.getEndDate(),
+                offset, request.getPageSize());
 
-        // 计算总页数
         long pages = (total + request.getPageSize() - 1) / request.getPageSize();
 
-        // 构建响应
         OdsAppGsmResponse response = new OdsAppGsmResponse();
         response.setRecords(records);
         response.setTotal(total);
         response.setPageNum(request.getPageNum());
         response.setPageSize(request.getPageSize());
         response.setPages(pages);
+        return response;
+    }
 
+    @Override
+    public DwdEvalOneResponse queryDwdEvalOneList(OdsIasEvalRequest request) {
+        Page<DwdEvalOne> page = new Page<>(request.getPageNum(), request.getPageSize());
+
+        LambdaQueryWrapper<DwdEvalOne> wrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.hasText(request.getSecuAccname())) {
+            wrapper.like(DwdEvalOne::getSecuAccname, request.getSecuAccname());
+        }
+        if (request.getStartDate() != null) {
+            wrapper.ge(DwdEvalOne::getBegDate, request.getStartDate());
+        }
+        if (request.getEndDate() != null) {
+            wrapper.le(DwdEvalOne::getBegDate, request.getEndDate());
+        }
+        wrapper.orderByDesc(DwdEvalOne::getBegDate);
+
+        Page<DwdEvalOne> resultPage = dwdEvalOneMapper.selectPage(page, wrapper);
+
+        DwdEvalOneResponse response = new DwdEvalOneResponse();
+        response.setRecords(resultPage.getRecords());
+        response.setTotal(resultPage.getTotal());
+        response.setPageNum(resultPage.getCurrent());
+        response.setPageSize(resultPage.getSize());
+        response.setPages(resultPage.getPages());
         return response;
     }
 }
