@@ -1,7 +1,16 @@
-/target/
 
-### IntelliJ IDEA ###
-.idea
-.iml
-
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
 .idea/*.xml
+
+# maven ignore
+target/
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+bin/

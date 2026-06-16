@@ -30,14 +30,14 @@ public class FiccController {
         return ficcService.queryOdsIasEvalList(odsIasEvalRequest);
     }
 
-    @Operation(summary = "估值表 专户(iBatis)", description = "账户明细估值表，专户数据（Apache iBatis -> ods_app_gsm_tg_valu_asset_liab_d_q）")
+    @Operation(summary = "估值表 账户(iBatis)", description = "账户明细估值表，专户数据（Apache iBatis -> ods_app_gsm_tg_valu_asset_liab_d_q）")
     @PostMapping("/prodAssetValuOfIn/queryList")
     public OdsAppGsmResponse queryOdsIasEvalOfInList(
             @Parameter(description = "账户明细查询请求") @RequestBody OdsAppGsmRequest request) {
         return ficcService.queryOdsIasEvalOfInList(request);
     }
 
-    @Operation(summary = "估值表 专户(DWD)", description = "账户明细估值表，专户数据（MyBatis-Plus -> dwd_eval_one）")
+    @Operation(summary = "第二估值表(DWD)", description = "账户明细估值表，专户数据（MyBatis-Plus -> dwd_eval_one）")
     @PostMapping("/dualProdAssetValuOfout/queryList")
     public DwdEvalOneResponse queryDwdEvalOneList(
             @Parameter(description = "账户明细查询请求") @RequestBody OdsIasEvalRequest request) {
