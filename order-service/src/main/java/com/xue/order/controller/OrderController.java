@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("order")
+@RequestMapping("/ficc")
 @Tag(name = "订单管理", description = "订单的查询与更新接口")
 public class OrderController {
 

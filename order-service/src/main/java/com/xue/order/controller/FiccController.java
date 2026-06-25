@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/ficc")
 @Tag(name = "账单明细", description = "Ficc账单明细接口")
 public class FiccController {
 
