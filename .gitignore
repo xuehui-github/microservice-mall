@@ -1,10 +1,20 @@
-
-# idea ignore
-.idea/
-*.ipr
+# IDEA
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/encodings.xml
+.idea/compiler.xml
+.idea/dbnavigator.xml
+.idea/jarRepositories.xml
+.idea/dataSources*.xml
+.idea/uiDesigner.xml
+.idea/gradle.xml
+.idea/libraries/
+.idea
+# IDEA生成临时文件
 *.iml
 *.iws
-.idea/*.xml
+*.ipr
 
 # maven ignore
 target/
