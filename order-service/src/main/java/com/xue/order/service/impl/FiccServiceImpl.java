@@ -11,9 +11,7 @@ import com.xue.order.pojo.OdsIasEvalOne;
 import com.xue.order.service.FiccService;
 import com.xue.order.vo.requests.OdsAppGsmRequest;
 import com.xue.order.vo.requests.OdsIasEvalRequest;
-import com.xue.order.vo.response.DwdEvalOneResponse;
-import com.xue.order.vo.response.OdsAppGsmResponse;
-import com.xue.order.vo.response.OdsIasEvalResponse;
+import com.xue.order.vo.response.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -33,7 +31,7 @@ public class FiccServiceImpl implements FiccService {
     private DwdEvalOneMapper dwdEvalOneMapper;
 
     @Override
-    public OdsIasEvalResponse queryOdsIasEvalList(OdsIasEvalRequest request) {
+    public PageResult<OdsIasEvalOne> queryOdsIasEvalList(OdsIasEvalRequest request) {
         Page<OdsIasEvalOne> page = new Page<>(request.getPageNum(), request.getPageSize());
 
         LambdaQueryWrapper<OdsIasEvalOne> wrapper = new LambdaQueryWrapper<>();
@@ -50,17 +48,11 @@ public class FiccServiceImpl implements FiccService {
 
         Page<OdsIasEvalOne> resultPage = odsOneMapper.selectPage(page, wrapper);
 
-        OdsIasEvalResponse response = new OdsIasEvalResponse();
-        response.setRecords(resultPage.getRecords());
-        response.setTotal(resultPage.getTotal());
-        response.setPageNum(resultPage.getCurrent());
-        response.setPageSize(resultPage.getSize());
-        response.setPages(resultPage.getPages());
-        return response;
+        return PageResult.of(resultPage.getRecords(), resultPage.getTotal(), resultPage.getCurrent(), resultPage.getSize());
     }
 
     @Override
-    public OdsAppGsmResponse queryOdsIasEvalOfInList(OdsAppGsmRequest request) {
+    public PageResult<OdsAppGsmTgValuAssetLiabDQ> queryOdsIasEvalOfInList(OdsAppGsmRequest request) {
         Long total = odsAppGsmTgMapper.count(
                 request.getAcctName(),
                 request.getStartDate(), request.getEndDate());
@@ -71,19 +63,11 @@ public class FiccServiceImpl implements FiccService {
                 request.getStartDate(), request.getEndDate(),
                 offset, request.getPageSize());
 
-        long pages = (total + request.getPageSize() - 1) / request.getPageSize();
-
-        OdsAppGsmResponse response = new OdsAppGsmResponse();
-        response.setRecords(records);
-        response.setTotal(total);
-        response.setPageNum(request.getPageNum());
-        response.setPageSize(request.getPageSize());
-        response.setPages(pages);
-        return response;
+        return PageResult.of(records, total, request.getPageNum(), request.getPageSize());
     }
 
     @Override
-    public DwdEvalOneResponse queryDwdEvalOneList(OdsIasEvalRequest request) {
+    public PageResult<DwdEvalOne> queryDwdEvalOneList(OdsIasEvalRequest request) {
         Page<DwdEvalOne> page = new Page<>(request.getPageNum(), request.getPageSize());
 
         LambdaQueryWrapper<DwdEvalOne> wrapper = new LambdaQueryWrapper<>();
@@ -100,12 +84,6 @@ public class FiccServiceImpl implements FiccService {
 
         Page<DwdEvalOne> resultPage = dwdEvalOneMapper.selectPage(page, wrapper);
 
-        DwdEvalOneResponse response = new DwdEvalOneResponse();
-        response.setRecords(resultPage.getRecords());
-        response.setTotal(resultPage.getTotal());
-        response.setPageNum(resultPage.getCurrent());
-        response.setPageSize(resultPage.getSize());
-        response.setPages(resultPage.getPages());
-        return response;
+        return PageResult.of(resultPage.getRecords(), resultPage.getTotal(), resultPage.getCurrent(), resultPage.getSize());
     }
 }

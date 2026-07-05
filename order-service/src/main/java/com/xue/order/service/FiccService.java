@@ -1,16 +1,17 @@
 package com.xue.order.service;
 
+import com.xue.order.pojo.DwdEvalOne;
+import com.xue.order.pojo.OdsAppGsmTgValuAssetLiabDQ;
+import com.xue.order.pojo.OdsIasEvalOne;
 import com.xue.order.vo.requests.OdsAppGsmRequest;
 import com.xue.order.vo.requests.OdsIasEvalRequest;
-import com.xue.order.vo.response.DwdEvalOneResponse;
-import com.xue.order.vo.response.OdsAppGsmResponse;
-import com.xue.order.vo.response.OdsIasEvalResponse;
+import com.xue.order.vo.response.PageResult;
 
 public interface FiccService {
 
-    OdsIasEvalResponse queryOdsIasEvalList(OdsIasEvalRequest odsIasEvalRequest);
+    PageResult<OdsIasEvalOne> queryOdsIasEvalList(OdsIasEvalRequest odsIasEvalRequest);
 
-    OdsAppGsmResponse queryOdsIasEvalOfInList(OdsAppGsmRequest request);
+    PageResult<OdsAppGsmTgValuAssetLiabDQ> queryOdsIasEvalOfInList(OdsAppGsmRequest request);
 
-    DwdEvalOneResponse queryDwdEvalOneList(OdsIasEvalRequest request);
+    PageResult<DwdEvalOne> queryDwdEvalOneList(OdsIasEvalRequest request);
 }
