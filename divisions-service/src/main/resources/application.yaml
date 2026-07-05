@@ -1,0 +1,19 @@
+server:
+  port: 7089
+spring:
+  application:
+    name: divisions-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: adminuser
+mybatis:
+  type-aliases-package: com.xue.divisionsservice.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+eureka:
+  client:
+    service-url:  # eureka的地址信息
+      defaultZone: http://127.0.0.1:10086/eureka
