@@ -10,7 +10,8 @@
 .idea/uiDesigner.xml
 .idea/gradle.xml
 .idea/libraries/
-.idea
+.idea/misc.xml
+
 # IDEA生成临时文件
 *.iml
 *.iws
