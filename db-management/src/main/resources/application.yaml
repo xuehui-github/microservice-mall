@@ -12,5 +12,6 @@ spring:
     encoding: UTF-8
     baseline-on-migrate: true
     baseline-version: 0
+    ignore-migration-patterns: '*:missing'
   application:
     name: db-management
